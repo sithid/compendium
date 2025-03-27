@@ -1,36 +1,69 @@
-# Get the command from arguments
-$command = $args[0]
-
-if ($command -eq "clean") {
-    Write-Host "Cleaning solution..." -ForegroundColor Yellow
-    dotnet clean
-    Write-Host "Clean completed!" -ForegroundColor Green
+$config = @{
+    ApiUrl       = "https://localhost:7125"
+    WebUrl       = "https://localhost:7008"
+    ApiDocsPath  = "/scalar/v1"
+    StartupDelay = 5
+    LogFile      = "build.log"
 }
-else {
-    # Build the solution
-    Write-Host "Building solution..." -ForegroundColor Green
-    dotnet build
 
-    # Check if build was successful
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "Build successful! Starting projects..." -ForegroundColor Green
-        
-        # Start both projects with HTTPS
-        Start-Process dotnet -ArgumentList "run --project Compendium.Api --launch-profile https"
-        Start-Process dotnet -ArgumentList "run --project Compendium.Web --launch-profile https"
-        
-        # Wait a moment for the projects to start
-        Start-Sleep -Seconds 5
-        
-        # Launch browsers
-        Write-Host "Launching browsers..." -ForegroundColor Green
-        Start-Process "https://localhost:7008"  # Frontend
-        Start-Process "https://localhost:7125/scalar/v1"  # Scalar API docs
-        
-        Write-Host "Projects launched successfully!" -ForegroundColor Green
+function Write-Log {
+    param($Message, $Color = "White")
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    $logMessage = "[$timestamp] $Message"
+    Write-Host $logMessage -ForegroundColor $Color
+    Add-Content -Path $config.LogFile -Value $logMessage
+}
+   
+function Handle-Error {
+    param($ErrorMessage)
+    Write-Log $ErrorMessage -Color Red
+    Write-Log "Build failed! Check $($config.LogFile) for details." -Color Red
+    exit 1
+}
+
+try {
+    $command = $args[0]
+
+    if ($command -eq "clean") {
+        Write-Log "Cleaning solution..." -Color Yellow
+        dotnet clean
+        if ($LASTEXITCODE -ne 0) {
+            Handle-Error "Clean failed!"
+        }
+        Write-Log "Clean completed successfully!" -Color Green
     }
     else {
-        Write-Host "Build failed! Please check the errors above." -ForegroundColor Red
-        exit 1
+        Write-Log "Building solution..." -Color Green
+        dotnet build
+        if ($LASTEXITCODE -ne 0) {
+            Handle-Error "Build failed!"
+        }
+
+        Write-Log "Build successful! Starting projects..." -Color Green
+        
+        try {
+            Start-Process dotnet -ArgumentList "run --project Compendium.Api --launch-profile https"
+            Start-Process dotnet -ArgumentList "run --project Compendium.Web --launch-profile https"
+        }
+        catch {
+            Handle-Error "Failed to start projects: $_"
+        }
+        
+        Write-Log "Waiting for projects to start..." -Color Yellow
+        Start-Sleep -Seconds $config.StartupDelay
+        
+        Write-Log "Launching browsers..." -Color Green
+        try {
+            Start-Process $config.WebUrl
+            Start-Process "$($config.ApiUrl)$($config.ApiDocsPath)"
+        }
+        catch {
+            Handle-Error "Failed to launch browsers: $_"
+        }
+        
+        Write-Log "Projects launched successfully!" -Color Green
     }
-} 
+}
+catch {
+    Handle-Error "Unexpected error: $_"
+}
