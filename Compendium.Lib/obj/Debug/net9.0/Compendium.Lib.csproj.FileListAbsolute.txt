@@ -9,15 +9,3 @@ D:\repos\Compendium.Lib\obj\Debug\net9.0\Compendium.Lib.dll
 D:\repos\Compendium.Lib\obj\Debug\net9.0\refint\Compendium.Lib.dll
 D:\repos\Compendium.Lib\obj\Debug\net9.0\Compendium.Lib.pdb
 D:\repos\Compendium.Lib\obj\Debug\net9.0\ref\Compendium.Lib.dll
-d:\repos\compendium\Compendium.Lib\bin\Debug\net9.0\Compendium.Lib.deps.json
-d:\repos\compendium\Compendium.Lib\bin\Debug\net9.0\Compendium.Lib.dll
-d:\repos\compendium\Compendium.Lib\bin\Debug\net9.0\Compendium.Lib.pdb
-d:\repos\compendium\Compendium.Lib\obj\Debug\net9.0\Compendium.Lib.GeneratedMSBuildEditorConfig.editorconfig
-d:\repos\compendium\Compendium.Lib\obj\Debug\net9.0\Compendium.Lib.AssemblyInfoInputs.cache
-d:\repos\compendium\Compendium.Lib\obj\Debug\net9.0\Compendium.Lib.AssemblyInfo.cs
-d:\repos\compendium\Compendium.Lib\obj\Debug\net9.0\Compendium.Lib.csproj.CoreCompileInputs.cache
-d:\repos\compendium\Compendium.Lib\obj\Debug\net9.0\Compendium.Lib.sourcelink.json
-d:\repos\compendium\Compendium.Lib\obj\Debug\net9.0\Compendium.Lib.dll
-d:\repos\compendium\Compendium.Lib\obj\Debug\net9.0\refint\Compendium.Lib.dll
-d:\repos\compendium\Compendium.Lib\obj\Debug\net9.0\Compendium.Lib.pdb
-d:\repos\compendium\Compendium.Lib\obj\Debug\net9.0\ref\Compendium.Lib.dll
