@@ -1,6 +1,6 @@
 [
   {
-    "Name": "New Profile",
+    "Name": "Compendium",
     "Projects": [
       {
         "Path": "Compendium.Api\\Compendium.Api.csproj",

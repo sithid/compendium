@@ -20,6 +20,21 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+    "Compendium": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:7125;http://localhost:5290",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "nativeDebugging": false,
+      "hotReloadEnabled": true,
+      "jsWebView2DebuggingEnabled": false,
+      "projects": [
+        "Compendium.Api",
+        "Compendium.Web"
+      ]
     }
   }
 }
